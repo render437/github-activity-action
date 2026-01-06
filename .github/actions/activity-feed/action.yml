@@ -1,0 +1,34 @@
+name: 'GitHub Activity Feed'
+description: 'Displays a user\'s recent GitHub activity in a customizable format.'
+inputs:
+  github_token:
+    description: 'GitHub token to authenticate with (required for private repositories)'
+    required: true
+  username:
+    description: 'GitHub username to fetch activity for (defaults to the user running the workflow)'
+    required: false
+  max_events:
+    description: 'Maximum number of events to display (default: 10)'
+    required: false
+    default: '10'
+  event_types:
+    description: 'Comma-separated list of event types to include (e.g., PushEvent, CreateEvent). Leave empty for all.'
+    required: false
+  exclude_repos:
+    description: 'Comma-separated list of repositories to exclude.'
+    required: false
+  date_format:
+    description: 'Format to use for displaying dates (using Moment.js format)'
+    required: false
+    default: 'YYYY-MM-DD HH:mm:ss'
+  display_html_links:
+    description: 'Whether to display HTML links in the activity feed (true/false, default: true)'
+    required: false
+    default: 'true'
+
+outputs:
+  activity_feed:
+    description: 'The formatted activity feed.'
+runs:
+  using: 'node16'
+  main: 'index.js'
