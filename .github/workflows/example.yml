@@ -1,0 +1,25 @@
+name: Example Usage of GitHub Activity Feed
+on:
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  activity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get GitHub Activity
+        id: activity_feed
+        uses: ./github-activity-action/.github/actions/activity-feed  # Important:  Relative path to the action
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          username: your-github-username  # Replace with your username
+          max_events: 5
+          event_types: PushEvent,PullRequestEvent,IssuesEvent, WatchEvent
+          exclude_repos: your-github-username/some-private-repo
+          date_format: 'MMM DD, YYYY'
+          display_html_links: true
+
+      - name: Print Activity Feed
+        run: |
+          echo "## Recent GitHub Activity"
+          echo "${{ steps.activity_feed.outputs.activity_feed }}"
